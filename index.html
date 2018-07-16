@@ -15,27 +15,124 @@
     <header>
         <a id="ti-square" href="https://www.to-increase.com"></a>
     </header>
-    <section class="main">
 
-    <h1> Deploy as Azure Web App</h1>
+    <img src="img/logo-connectivity-studio.png" id="cs-logo">
 
-    <h2> Create Azure Web App </h2>
-    <img src="img/azure-create-app-service-s1.png">
-    <img src="img/azure-create-app-service-s2.png">
-    <img src="img/azure-create-app-service-s3.png">
+    <article class="main">
+        <p>
+            In this article we describe how to setup the IIS-application for Inbound Webservices in Connectivity Studio.
+        </p>
+
+        <h1>Option 1: Deploy as a regular IIS website on a machine you control</h1>
+        <p>We created an
+            <a href="https://to-increase.atlassian.net/wiki/spaces/AXBIS/pages/90178349/Install+inbound+web+service+action+IIS+application+for+Microsoft+Dynamics+365+for+Operations">article 
+                that describes how to deploy the IIS application on a machine you control</a>.</p>
+
+        <h1>Option 2: Deploy as Azure Web App</h1>
 
 
+        <section>
+            <h2> Create Azure Web App </h2>
+            <ol>
+                <li>Go to App Services</li>
+                <li>Click Add to create a new App Service</li>
+                <li>Choose Web App</li>
+                <li>Click Create</li>
+            </ol>
+            <img src="img/azure-create-app-service-s1.png" class="screenshot">
 
-    <h2>Configure</h2>
-    <img src="img/azure-config-app-service-s1.png">
 
-    <h2>Deploy as IIS site</h2>
-    <img src="img/azure-auth-app-service-s1.png">
-    <img src="img/azure-auth-app-service-s2.png">
-    </section>
+            <p>You are free too choose the values here.</p>
+            <img src="img/azure-create-app-service-s2.png" class="screenshot">
+
+            <p>A new empty app environment is being prepared, wait until it is ready.</p>
+            <img src="img/azure-create-app-service-s3.png" class="screenshot">
+        </section>
+
+        <section>
+            <h2>Configure</h2>
+            <ol>
+                <li>Find your newly created app service, e.g. via menu item All resources</li>
+                <li>Choose application settings</li>
+                <li>Create a new entry named "WEBSITE_LOAD_USER_PROFILE" and give it the value 1</li>
+                <li>Mark it as a slot setting</li>
+                <li>Press save</li>
+            </ol>
+            <img src="img/azure-config-app-service-s1.png" class="screenshot">
+        </section>
+
+        <section>
+            <h2>Configure authentication with Active Directory</h2>
+            <ol>
+                <li>Open Authentication/Authorization</li>
+                <li>Enable App Service Authentication</li>
+                <li>Choose Login with Azure Active Directory</li>
+                <li>Configure Active Directory (see next screen)</li>
+                <li>Once done, click Save</li>
+
+
+            </ol>
+            <img src="img/azure-auth-app-service-s1.png" class="screenshot">
+
+            <ol>
+                <li>Choose Express as Management Mode</li>
+                <li>Choose Create New Active Directory</li>
+                <li>Click OK</li>
+            </ol>
+            <img src="img/azure-auth-app-service-s2.png" class="screenshot">
+        </section>
+
+        <section>
+            <h2>Create a Github deployment slot</h2>
+            <ol>
+                <li>Go to Deployment options</li>
+                <li>Pick Github</li>
+                <li>Provide your own github username for Authorization</li>
+                <li>If you want to connect with your organization GitHub account, as opposed to your personal account, choose
+                    your Organization. You can leave this blank if you don't have one on GitHub.
+                </li>
+                <li>For project, choose the GitHub repository</li>
+                <li>Choose branch master</li>
+                <li>Click OK</li>
+            </ol>
+            <img src="img/azure-github-s1.png" class="screenshot">
+            <img src="img/azure-github-s2.png" class="screenshot">
+            <img src="img/azure-github-s3.png" class="screenshot">
+            <img src="img/azure-github-s4.png" class="screenshot">
+        </section>
+    </article>
+
+
+    <div id="myModal" class="modal">
+        <span id="close-modal">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('myModal');
+        var modalImg = document.getElementById("img01");
+
+        var imgs = document.getElementsByClassName("screenshot");
+
+        for (var i = 0; i < imgs.length; i++) {
+            imgs[i].onclick = function () {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+            }
+        }
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementById("close-modal");
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+
+    </script>
 
 </body>
-
-
 
 </html>
